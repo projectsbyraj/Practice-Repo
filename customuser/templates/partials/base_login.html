@@ -1,0 +1,42 @@
+{% load static %}
+
+<html lang="en" dir="ltr">
+
+<!------------------------------------ Head Section ------------------------------------------>
+<head>
+    <meta charset="utf-8">
+    <title>{% block title %}{% endblock title %}</title>
+
+{% block css %}
+    <link href="/static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/static/css/login.css" />
+{% endblock css %}
+
+</head>
+
+<!------------------------------------- Head Over -------------------------------------------->
+
+<!------------------------------------- Body Section ----------------------------------------->
+<body>
+
+<div class="main_content">
+    <p>Hello World</p>
+    {% if messages %}
+        <div>
+          <strong>Messages:</strong>
+          <ul>
+            {% for message in messages %}
+            <li>{{message}}</li>
+            {% endfor %}
+          </ul>
+        </div>
+    {% endif %}
+
+  {% block content %}
+
+  {% endblock %}
+</div>
+
+</body>
+<!------------------------------------- Body Over -------------------------------------------->
+</html>

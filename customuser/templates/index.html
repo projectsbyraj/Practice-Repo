@@ -1,0 +1,134 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Home | My Blog
+{% endblock title %}
+
+{% block content %}
+
+
+<!---------------------------------------------- Banner Starts Here ----------------------------------------------->
+<div class="banner header-text">
+    <div class="owl-banner owl-carousel">
+      <div class="banner-item-01">
+        <div class="text-content">
+           <h2>It Starts with you</h2></br>
+          <a class="btn btn-primary btn-l text-uppercase js-scroll-trigger" style="background-color: #E84342; margin-left: 300px;"
+             href="#services">Tell Me More</a>
+        </div>
+      </div>
+    </div>
+</div>
+<!-------------------------------------------- Banner Ends Here ---------------------------------------------------->
+
+
+{% if user.is_authenticated %}
+<section class="page-section" id="main">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12 text-center">
+          <h2 class="section-heading text-uppercase" style="text-align: center;">Today's Blogs</h2>
+          <h3 class="section-subheading text-muted">Spread the happiness...</h3>
+        </div>
+      </div>
+
+    <div class="row">
+        <div class="col-md-2">
+           <form method="get">
+            {{ filter.form.as_p }}
+            <button type="submit">Search</button>
+           </form>
+           <ul>
+            {% for user in filter.qs %}
+           <li>{{ blog.username }} - {{ user.get_full_name }}</li>
+            {% endfor %}
+           </ul>
+        </div>
+
+      <div class="col-md-8">
+
+        {% for blog in blog_entries %}
+          <div class="card mb-4 mt-4">
+            <div class="card-body">
+              <h2 class="card-title">{{blog.title}}</h2>
+              <p class="card-text">{{blog.body | truncatechars:100}}</p>
+              {% comment %} <a href="#" class="btn btn-primary btn-sm">Read More &rarr;</a> {% endcomment %}
+            </div>
+            <div class="card-footer text-muted">
+              Posted on {{blog.date}} by
+              <span class= "text-info mr-2">{{blog.author}}</span>
+            </div>
+          </div>
+
+        {% endfor %}
+
+        {% if is_paginated %}
+        <!-- Pagination -->
+        <ul class="pagination justify-content-center mb-4">
+        {% if page_obj.has_previous %}
+          <li class="page-item">
+            <a class="page-link" href="?page={{page_obj.previous_page_number}}">&larr; Previous Page</a>
+          </li>
+        {% endif %}
+
+        {% if page_obj.has_next %}
+          <li class="page-item">
+            <a class="page-link" href="?page={{page_obj.next_page_number}}">Next Page &rarr;</a>
+          </li>
+        {% endif %}
+        </ul>
+        {% endif %}
+        </div>
+        <div class="col-md-2"></div>
+       </div>
+    </div>
+</section>
+{% else %}
+
+<!--------------------------------------- How We Work Section ------------------------------------------------>
+<section class="page-section" id="index">
+    <div class="container">
+      <div class="row">
+          <div class="col-lg-12 text-center">
+          <h2 class="section-heading text-uppercase" style="text-align: center;">Create your blog</h2>
+          <h3 class="section-subheading text-muted">Publish your passion, your way</h3>
+        </div>
+      </div>
+      <div class="row text-center">
+        <div class="col-md-6">
+          <span class="fa-stack fa-4x">
+            <i class="fa fa-circle fa-stack-2x text-primary"></i>
+            <i class="fa fa-sign-in fa-stack-1x fa-inverse"></i>
+          </span>
+          <h4 class="service-heading">Already have an account?</h4>
+          <p class="text-muted">Login to your account and grab the exclusive offers and deals. Create, update,
+              delete your blogs. Filter specific blogs of your choice!!!</p></br>
+          <a class="btn btn-primary btn-l text-uppercase js-scroll-trigger" style="background-color: #E84342;" href="/accounts/login/"> Login
+              &nbsp;<i class="fa fa-arrow-right" aria-hidden="true"></i></a>
+        </div>
+
+
+          <div  class="col-md-6">
+          <span class="fa-stack fa-4x">
+            <i class="fa fa-circle fa-stack-2x text-primary"></i>
+            <i class="fa fa-user-plus fa-stack-1x fa-inverse"></i>
+          </span>
+          <h4 class="service-heading">Create an account!!</h4>
+          <p class="text-muted">Join the best bloggers community and uncovers the exclusive offers and deals,
+              specially made for you. Expolore the blogs written by experts!!!</p></br>
+          <a class="btn btn-primary btn-l text-uppercase js-scroll-trigger" style="background-color: #E84342;" href="/accounts/signup/">Sign Up
+              &nbsp <i class="fa fa-arrow-right" aria-hidden="true"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+<!--------------------------------------- Section Over ------------------------------------------------>
+
+{% endif %}
+
+{% endblock content %}
+
+{% block extra_js %}
+
+{% endblock extra_js %}

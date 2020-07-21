@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+{% block content %}
+<section class="page-section" id="main">
+    <div class="container">
+      <div class="row" style="padding-bottom:200px;">
+        <div class="col-lg-12 text-center">
+          <h2 class="section-heading text-uppercase" style="text-align: center;">Confirm Delete</h2>
+        </div>
+      </div>
+
+      <div class="row text-center">
+       <div class="col-md-12">
+        <form method="POST">
+        {% csrf_token %}
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4">Are you sure you want to delete {{ blog.title }}</legend>
+        </fieldset>
+        <div class="form-group">
+            <button class="btn btn-primary" type="submit">Confirm</button>
+            <a class="btn btn-secondary" href="{% url 'post-delete' blog.id %}">Cancel</a>
+        </div>
+        </form>
+</div>
+      </div>
+    </div></section>
+{% endblock content %}

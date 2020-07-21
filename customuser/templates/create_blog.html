@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %}
+New Blog | My Blog
+{% endblock title %}
+
+{% block content %}
+<section class="page-section" id="Head">
+    <div class="container">
+        <div class="row text-center">
+            <div class="col-md-2"></div>
+        <div class="col-md-8">
+            <div class="card mb-4 mt-4">
+                <div class="card-header">Create Blog Post</div>
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %} 
+                        {{form.as_p}}
+                        <small><small id="letters">200</small> character remaining</small> <br /><br />
+                        <button type="submit" class="btn btn-primary">Post</button>
+                    </form> 
+                </div>
+            </div>
+        </div>
+            <div class="col-md-2"></div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+    
+{% block extra_js %}
+    <script>
+        $("#{{ form.post_text.auto_id }}").keyup(function(){
+            var lengthCount = this.value.length;
+            var letterValue = 200 - lengthCount
+            $("#letters").html(letterValue);
+        });
+    </script>
+{% endblock extra_js %}

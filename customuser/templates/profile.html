@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Dashboard | My Blog
+{% endblock title %}
+
+{% block content %}
+    
+<section class="page-section" id="Head">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12 text-center">
+          <h2 class="section-heading text-uppercase" style="text-align: center;">My Blogs</h2>
+          <h3 class="section-subheading text-muted">Spread the happiness...</h3>
+        </div>
+      </div>
+        <div class="row text-center">
+    <div class="col-md-4"></div>
+        <div class="col-md-4">
+            <button id="new_blog" style="width:100%;" class="btn btn-dark">Create New Blog</button>
+        </div>
+        <div class="col-md-4"></div>
+
+    </div>
+</section>
+
+<section class="page-section" id="profile">
+    <div class="container">
+    <div class="row text-center">
+      <div class="col-md-12">
+        
+        {% for blog in blog_entries %}
+          <div class="card mb-4 mt-4">
+            <div class="card-body">
+              <h2 class="card-title">{{blog.title}}</h2>
+              <p class="card-text">{{blog.body}}</p>
+                <a class='btn btn-secondary btn-sam mt-1 mb-1' href="{% url 'post-update' blog.id %}">Update</a>
+                <a class='btn btn-danger btn-sam mt-1 mb-1' href="{% url 'post-delete' blog.id %}">Delete</a>
+              {% comment %} <a href="#" class="btn btn-primary btn-sm">Read More &rarr;</a> {% endcomment %}
+            </div>
+            <div class="card-footer text-muted">
+              Posted on {{blog.date}} by
+              <span class= "text-info mr-2">{{blog.author}}</span>
+            </div>
+          </div>
+          </div>
+
+        {% endfor %}
+
+    {% if is_paginated %}
+        <!-- Pagination -->
+        <ul class="pagination justify-content-center mb-4">
+        {% if page_obj.has_previous %}
+          <li class="page-item">
+            <a class="page-link" href="?page={{page_obj.previous_page_number}}">&larr; Previous Page</a>
+          </li>
+        {% endif %}
+
+        {% if page_obj.has_next %}
+          <li class="page-item">
+            <a class="page-link" href="?page={{page_obj.next_page_number}}">Next Page &rarr;</a>
+          </li>
+        {% endif %}
+        </ul>
+    {% endif %}
+      </div>
+    </div>
+</section>
+
+  {% endblock %}
+    
+{% block extra_js %}
+    <script>
+        $('#new_blog').click(function(){
+            window.location.href="/create";
+        });
+    </script>
+{% endblock extra_js %}
+
+

@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+
+{% block head_title %}{% trans "Signup" %}{% endblock %}
+
+{% block content %}
+<section class="page-section" id="services">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12 text-center" style="padding-bottom: 100px;">
+          <h1>{% trans "Sign Up" %}</h1>
+         </div>
+      </div>
+
+      <div class="row text-center" style="padding-bottom: 50px;">
+        <div class="col-md-3">
+              <p>{% blocktrans %}Already have an account? Then please <a href="{{ login_url }}">sign in</a>.{% endblocktrans %}</p>
+        </div>
+
+
+        <div class="col-md-6" >
+          <form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}" style="align-items: left;">
+            {% csrf_token %}
+                    <div class="form-group">
+                        <label for="id_username" style="display: inline-block; width: 100px; text-align: right;">Username:</label>
+                        <input type="text" name="username" placeholder="Username" autofocus="autofocus" minlength="1" maxlength="150" required id="id_username">
+                    </div>
+                    <div class="form-group">
+                        <label for="id_email" style="display: inline-block; width: 100px; text-align: right;">E-mail:</label>
+                        <input type="email" name="email" placeholder="E-mail address" id="id_email">
+                    </div>
+                    <div class="form-group">
+                        <label for="id_password1" style="display: inline-block; width: 100px; text-align: right;">Password:</label>
+                        <input type="password" name="password1" placeholder="Password" required id="id_password1">
+                    </div>
+                    <div class="form-group">
+                        <label for="id_password2" style="display: inline-block; width: 100px; text-align: right;">Password (again):</label>
+                        <input type="password" name="password2" placeholder="Password (again)" required id="id_password2">
+                        <p>- password can't be similar to other information.</p>
+                        <p>- password must contain at least 8 characters.</p>
+                        <p>- password can't be a commonly used password.</p>
+                        <p>- Your password can't be entirely numeric.</p>
+                    </div>
+                  {% if redirect_field_value %}
+                      <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+                  {% endif %}
+                  <button class="btn btn-primary" type="submit">{% trans "Sign Up" %} &raquo;</button>
+          </form>
+        </div>
+
+        <div class="col-md-3">
+            {% if messages %}
+                <div>
+                  <strong>Messages:</strong>
+                  <ul>
+                    {% for message in messages %}
+                    <li>{{message}}</li>
+                    {% endfor %}
+                  </ul>
+                </div>
+            {% endif %}
+        </div>
+
+
+       </div>
+      </div>
+    </div>
+</section>
+
+{% endblock %}
